@@ -2,12 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"os"
-	"os/user"
-	"path/filepath"
-	"strconv"
-	"strings"
 )
 
 type exitCode int
@@ -25,80 +20,27 @@ func main() {
 
 	command := os.Args[1]
 	subArgs := os.Args[2:]
-	code := exitOK
+	var err error
 	switch command {
+	case "clear":
+		err = commandClear(subArgs)
+	case "edit":
+		err = commandEdit(subArgs)
 	case "list":
-		code = commandList(subArgs)
+		err = commandList(subArgs)
 	case "new":
-		code = commandNew(subArgs)
+		err = commandNew(subArgs)
+	case "run":
+		err = commandRun(subArgs)
 	default:
-		fmt.Printf("error: unknown command: %q\n", command)
+		err = fmt.Errorf("unknown command: %s", command)
+	}
+
+	code := exitOK
+	if err != nil {
+		fmt.Printf("error: %s", err)
 		code = exitError
 	}
 
 	os.Exit(int(code))
-}
-
-func commandNew(args []string) exitCode {
-	u, err := user.Current()
-	if err != nil {
-		fmt.Println("error: failed to get current user")
-		return exitError
-	}
-
-	dir := filepath.Join(os.TempDir(), "goplay_"+u.Username)
-	if err := os.Mkdir(dir, 0700); err != nil && !os.IsExist(err) {
-		fmt.Printf("error: faild to create directory: %s: %s\n", dir, err)
-		return exitError
-	}
-
-	curmax := 0
-	if paths, err := filepath.Glob(filepath.Join(dir, "[1-9].go")); err == nil {
-		for _, path := range paths {
-			stem, _ := strings.CutSuffix(filepath.Base(path), ".go")
-			n, err := strconv.Atoi(stem)
-			if err == nil && n > curmax {
-				curmax = n
-			}
-		}
-	}
-
-	newName := fmt.Sprintf("%d.go", curmax+1)
-	newPath := filepath.Join(dir, newName)
-	file, err := os.Create(newPath)
-	if err != nil {
-		fmt.Printf("error: failed to create file: %s: %s\n", newPath, err)
-		return exitError
-	}
-	defer file.Close()
-
-	template := `package main
-
-import "fmt"
-
-func main() {
-	fmt.Println("Hello, 世界")
-}
-`
-
-	io.WriteString(file, template)
-
-	return exitOK
-}
-
-func commandList(args []string) exitCode {
-	u, err := user.Current()
-	if err != nil {
-		fmt.Println("error: failed to get current user")
-		return exitError
-	}
-
-	dir := filepath.Join(os.TempDir(), "goplay_"+u.Username)
-	if paths, err := filepath.Glob(filepath.Join(dir, "[1-9].go")); err == nil {
-		for _, path := range paths {
-			fmt.Println(path)
-		}
-	}
-
-	return exitOK
 }
