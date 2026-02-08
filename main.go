@@ -32,6 +32,8 @@ func main() {
 		err = commandNew(subArgs)
 	case "run":
 		err = commandRun(subArgs)
+	case "show":
+		err = commandShow(subArgs)
 	default:
 		err = fmt.Errorf("unknown command: %s", command)
 	}
