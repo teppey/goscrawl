@@ -19,11 +19,11 @@ func main() {
 		fmt.Println("\tgosketch <command> [arguments]\n")
 		fmt.Println("The commands are:\n")
 		fmt.Println("\tclear  clear all sketches")
-		fmt.Println("\tedit   edit the sketch")
-		fmt.Println("\tlist   list the sketches")
-		fmt.Println("\tnew    create and edit the sketch and run it")
-		fmt.Println("\trun    the sketch")
-		fmt.Println("\tshow   the sketch\n")
+		fmt.Println("\tedit   edit a sketch")
+		fmt.Println("\tlist   list sketches")
+		fmt.Println("\tnew    create and edit a sketch and run it")
+		fmt.Println("\trun    run a sketch")
+		fmt.Println("\tshow   display a sketch\n")
 		os.Exit(int(exitError))
 	}
 
