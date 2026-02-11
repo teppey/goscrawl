@@ -14,7 +14,16 @@ const (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("error: no command")
+		fmt.Println("gosketch is a tool for edit and run a Go code instantly like the \"Go Playgrond\".\n")
+		fmt.Println("Usage:\n")
+		fmt.Println("\tgosketch <command> [arguments]\n")
+		fmt.Println("The commands are:\n")
+		fmt.Println("\tclear  clear all sketches")
+		fmt.Println("\tedit   edit the sketch")
+		fmt.Println("\tlist   list the sketches")
+		fmt.Println("\tnew    create and edit the sketch and run it")
+		fmt.Println("\trun    the sketch")
+		fmt.Println("\tshow   the sketch\n")
 		os.Exit(int(exitError))
 	}
 
