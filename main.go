@@ -14,16 +14,16 @@ const (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("gosketch is a tool for edit and run a Go code instantly like the \"Go Playgrond\".\n")
+		fmt.Println("goscrawl is a tool for edit and run a Go code like the \"Go Playgrond\".\n")
 		fmt.Println("Usage:\n")
-		fmt.Println("\tgosketch <command> [arguments]\n")
+		fmt.Println("\tgoscrawl <command> [arguments]\n")
 		fmt.Println("The commands are:\n")
-		fmt.Println("\tclear  clear all sketches")
-		fmt.Println("\tedit   edit a sketch")
-		fmt.Println("\tlist   list sketches")
-		fmt.Println("\tnew    create and edit a sketch and run it")
-		fmt.Println("\trun    run a sketch")
-		fmt.Println("\tshow   display a sketch\n")
+		fmt.Println("\tclear  clear all files")
+		fmt.Println("\tedit   edit and run file")
+		fmt.Println("\tlist   list all files")
+		fmt.Println("\tnew    create and edit file and run it")
+		fmt.Println("\trun    run file")
+		fmt.Println("\tshow   display file\n")
 		os.Exit(int(exitError))
 	}
 
