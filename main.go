@@ -14,9 +14,9 @@ const (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("goscrawl is a tool for edit and run Go code instantly on console.\n")
+		fmt.Println("goscribble is a tool for edit and run Go code instantly on console.\n")
 		fmt.Println("Usage:\n")
-		fmt.Println("\tgoscrawl <command> [arguments]\n")
+		fmt.Println("\tgoscribble <command> [arguments]\n")
 		fmt.Println("The commands are:\n")
 		fmt.Println("\tclear  clear all files")
 		fmt.Println("\tedit   edit and run file")
