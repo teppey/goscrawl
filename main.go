@@ -5,27 +5,25 @@ import (
 	"os"
 )
 
-type exitCode int
-
 const (
-	exitOK    exitCode = 0
-	exitError exitCode = 1
+	exitOK = 0
+	exitError = 1
 )
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("goscribble is a tool for edit and run Go code instantly on console.\n")
-		fmt.Println("Usage:\n")
-		fmt.Println("\tgoscribble <command> [arguments]\n")
-		fmt.Println("The commands are:\n")
+		fmt.Print("goscribble is a tool for edit and run Go code instantly on console.\n\n")
+		fmt.Print("Usage:\n\n")
+		fmt.Print("\tgoscribble <command> [arguments]\n\n")
+		fmt.Print("The commands are:\n\n")
 		fmt.Println("\tclear  clear all files")
 		fmt.Println("\tdir    print directory path")
 		fmt.Println("\tedit   edit and run file")
 		fmt.Println("\tlist   list all files")
 		fmt.Println("\tnew    create and edit file and run it")
 		fmt.Println("\trun    run file")
-		fmt.Println("\tshow   display file\n")
-		os.Exit(int(exitError))
+		fmt.Print("\tshow   display file\n\n")
+		os.Exit(exitError)
 	}
 
 	command := os.Args[1]
@@ -56,5 +54,5 @@ func main() {
 		code = exitError
 	}
 
-	os.Exit(int(code))
+	os.Exit(code)
 }

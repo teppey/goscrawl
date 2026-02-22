@@ -10,9 +10,13 @@ func editCommandEdit(args []string) error {
 		return err
 	}
 
-	path := filepath.Join(dir, "0.go")
+	path := filepath.Join(dir, scribbleFile)
 
 	if err := edit(path); err != nil {
+		return err
+	}
+
+	if err := goModTidy(dir); err != nil {
 		return err
 	}
 

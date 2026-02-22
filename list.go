@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"path/filepath"
+	"os"
 )
 
 func listCommand(args []string) error {
@@ -11,10 +11,13 @@ func listCommand(args []string) error {
 		return err
 	}
 
-	if paths, err := filepath.Glob(filepath.Join(dir, "[0-9].go")); err == nil {
-		for _, path := range paths {
-			fmt.Println(path)
-		}
+	entries, err := os.ReadDir(dir)
+	if err != nil {
+		return err
+	}
+
+	for _, entry := range entries {
+		fmt.Println(entry.Name())
 	}
 
 	return nil

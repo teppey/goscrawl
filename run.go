@@ -10,7 +10,18 @@ func runCommand(args []string) error {
 		return err
 	}
 
-	path := filepath.Join(dir, "0.go")
+	if err := goModInit(dir); err != nil {
+		return err
+	}
+
+	if err := goModTidy(dir); err != nil {
+		return err
+	}
+
+	path := filepath.Join(dir, scribbleFile)
+	if err := goimports(path); err != nil {
+		return err
+	}
 
 	if err := run(path); err != nil {
 		return err

@@ -9,6 +9,19 @@ import (
 	"path/filepath"
 )
 
+const (
+	scribbleFile = "scribble.go"
+	scribbleOldFile = "scribble.go.old"
+	defaultTemplate = `package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, world")
+}
+`
+)
+
 func baseDir() (string, error) {
 	u, err := user.Current()
 	if err != nil {
@@ -53,8 +66,35 @@ func goimports(path string) error {
 	return err
 }
 
+func goModInit(modDir string) error {
+	if exists(filepath.Join(modDir, "go.mod")) {
+		return nil
+	}
+
+	cmd := exec.Command("go", "mod", "init", filepath.Base(modDir))
+	cmd.Dir = modDir
+	out, err := cmd.CombinedOutput()
+	if len(out) > 0 {
+		fmt.Print(string(out))
+	}
+
+	return err
+}
+
+func goModTidy(modDir string) error {
+	cmd := exec.Command("go", "mod", "tidy")
+	cmd.Dir = modDir
+	out, err := cmd.CombinedOutput()
+	if len(out) > 0 {
+		fmt.Printf("go mod tidy: %s", string(out))
+	}
+
+	return err
+}
+
 func run(path string) error {
 	cmd := exec.Command("go", "run", path)
+	cmd.Dir = filepath.Dir(path)
 	out, err := cmd.CombinedOutput()
 	if len(out) > 0 {
 		fmt.Print(string(out))

@@ -12,7 +12,7 @@ func showCommand(args []string) error {
 		return err
 	}
 
-	path := filepath.Join(dir, "0.go")
+	path := filepath.Join(dir, scribbleFile)
 	if exists(path) {
 		contents, err := os.ReadFile(path)
 		if err != nil {

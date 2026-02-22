@@ -12,9 +12,10 @@ func clearCommand(args []string) error {
 		return err
 	}
 
-	// TODO: "9"以上の数字のファイルに対応
-	if paths, err := filepath.Glob(filepath.Join(dir, "[0-9].go")); err == nil {
-		for _, path := range paths {
+	names := []string{scribbleFile, scribbleOldFile, "go.mod", "go.sum"}
+	for _, name := range names {
+		path := filepath.Join(dir, name)
+		if exists(path) {
 			if err := os.Remove(path); err != nil {
 				return fmt.Errorf("failed to remove file: %s: %w", path, err)
 			}
