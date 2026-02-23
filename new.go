@@ -7,6 +7,16 @@ import (
 )
 
 func newCommand(args []string) error {
+	// TODO: 標準入力からの読み込みをサポートする
+	template := defaultTemplate
+	if len(args) > 0 {
+		data, err := os.ReadFile(args[0])
+		if err != nil {
+			return err
+		}
+		template = string(data)
+	}
+
 	dir, err := baseDir()
 	if err != nil {
 		return err
@@ -28,7 +38,7 @@ func newCommand(args []string) error {
 		}
 	}
 
-	if err := os.WriteFile(path, []byte(defaultTemplate), 0600); err != nil {
+	if err := os.WriteFile(path, []byte(template), 0600); err != nil {
 		return fmt.Errorf("failed to write file: %s: %w", path, err)
 	}
 
